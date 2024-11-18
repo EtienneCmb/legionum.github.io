@@ -140,7 +140,7 @@ function calculerUFC() {
   //                               POST-PROCESSING
   // --------------------------------------------------------------------------
   if (message === "") {
-    message = "Concentration : " + Math.round(ufc * 10000) / 10000 + " UFC/L";
+    message = "Concentration : " + roundToNearest(ufc) + " UFC/L";
   }
 
   if (n === -1) {
@@ -165,4 +165,21 @@ function toggleInput(inputId) {
   if (checkbox.checked) {
     inputField.value = 0; // Mettre la valeur à 0 si la checkbox est cochée
   }
+}
+
+function roundToNearest(number) {
+  // Convert the number to scientific notation
+  const scientificNotation = number.toExponential();
+
+  // Extract the exponent and mantissa
+  const [mantissa, exponent] = scientificNotation.split('e');
+
+  // Round the mantissa to the nearest ten
+  const roundedMantissa = Math.round(parseFloat(mantissa) * 10) / 10;
+
+  // Reconstruct the number in scientific notation
+  const roundedScientificNotation = roundedMantissa + 'e' + exponent;
+
+  // Convert the rounded scientific notation back to a number
+  return parseFloat(roundedScientificNotation);
 }
